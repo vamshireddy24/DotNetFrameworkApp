@@ -1,0 +1,34 @@
+name: Build and Test .NET Framework 4.6.1
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest  # Runs on a Windows environment
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4  # Checks out the repository
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2  # Sets up NuGet
+
+      - name: Restore NuGet Packages
+        run: nuget restore YourSolution.sln  # Restore dependencies
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1.1  # Setup MSBuild
+
+      - name: Build Solution
+        run: msbuild YourSolution.sln /p:Configuration=Release /p:Platform="Any CPU"
+
+      - name: Run Unit Tests
+        run: |
+          vstest.console.exe path\to\YourTestProject.dll
