@@ -21,14 +21,14 @@ jobs:
         uses: NuGet/setup-nuget@v2  # Sets up NuGet
 
       - name: Restore NuGet Packages
-        run: nuget restore YourSolution.sln  # Restore dependencies
+        run: nuget restore DotNetFrameworkApp.sln  # Restore dependencies
 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1.1  # Setup MSBuild
 
       - name: Build Solution
-        run: msbuild YourSolution.sln /p:Configuration=Release /p:Platform="Any CPU"
+        run: msbuild DotNetFrameworkApp.sln /p:Configuration=Release /p:Platform="Any CPU"
 
       - name: Run Unit Tests
         run: |
-          vstest.console.exe path\to\YourTestProject.dll
+          vstest.console.exe \DotNetFrameworkApp.dll
